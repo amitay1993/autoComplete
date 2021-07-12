@@ -20,26 +20,8 @@ function SyncDropDown({ value: searchTerm, options, onChange: setSearchTerm }) {
       select,
     },
     inputProps,
-  } = useDropDown(countries, searchTerm, setSearchTerm);
-
-  //console.log(highlightedItemIndex);
-  //console.log(inputProps);
-  //console.log({ state });
-
-  const inputRef = useRef(null);
-
-  // const search = (event) => {
-  //   const input = event.target.value;
-  //   setSearchTerm(input);
-  //   setSelectedCountry(null);
-  // };
-
-  // const select = (country) => {
-  //   setSelectedCountry({ name: country.name, flag: country.flag });
-  //   setSearchTerm(country.name);
-  //   setHighlightedItemIndex(-1);
-  //   setIsOpen(false);
-  // };
+    inputRef,
+  } = useDropDown(searchTerm, setSearchTerm, countries);
 
   const showCountries = () => {
     let filteredCountries;
@@ -62,7 +44,7 @@ function SyncDropDown({ value: searchTerm, options, onChange: setSearchTerm }) {
     } else {
       filteredCountries = countries
         .filter((country) =>
-          country.name.toLowerCase().includes(searchTerm.toLowerCase())
+          country.name.toLowerCase().includes(searchText.toLowerCase())
         )
         .map((country, idx) => {
           return (
@@ -83,26 +65,11 @@ function SyncDropDown({ value: searchTerm, options, onChange: setSearchTerm }) {
     return filteredCountries;
   };
 
-  // useEffect(() => {
-  //   function handleClickOutside(event) {
-  //     if (inputRef.current && !inputRef.current.contains(event.target)) {
-  //       setIsOpen(false);
-  //     }
-  //   }
-  //   // Bind the event listener
-  //   document.addEventListener("mousedown", handleClickOutside);
-  //   return () => {
-  //     // Unbind the event listener on clean up
-  //     document.removeEventListener("mousedown", handleClickOutside);
-  //   };
-  // }, [inputRef]);
-
   return (
     <Search ref={inputRef}>
       <label htmlFor="countriesChoice">Choose a Country:</label>
       {selectedCountry && <img src={selectedCountry.flag} />}
       <input {...inputProps} />
-
       {isOpen && <CountryList>{showCountries()}</CountryList>}
     </Search>
   );

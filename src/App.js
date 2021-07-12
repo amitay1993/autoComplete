@@ -12,6 +12,7 @@ function App() {
   return (
     <div>
       <DropDown
+        loadOptions={loadOptions}
         onChange={setSearchTerm}
         value={searchTerm}
         options={{ countries: data }}
