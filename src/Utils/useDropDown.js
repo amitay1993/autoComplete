@@ -41,6 +41,7 @@ export function useDropDown(searchTerm, setSearchTerm, countries = []) {
   const chooseDirection = (event) => {
     const direction = event.code;
     const { highlightedItemIndex } = state;
+    console.log(direction);
     if (direction === "ArrowUp") {
       setState((prevState) => {
         return {
