@@ -35,47 +35,21 @@ function AsyncDropDown({
   console.log(selectedCountry, isLoading);
 
   const showCountries = () => {
-    let filteredCountries;
-    if (selectedCountry) {
-      // console.log("test");
-      // console.log(countries);
-      filteredCountries = countries.map((country, idx) => {
-        return (
-          <CountryListItem
-            data-focused={idx === highlightedItemIndex}
-            data-selected={selectedCountry?.name === country.name}
-            onClick={() => select(country)}
-            key={country.name}
-          >
-            <Container>
-              <img src={country.flag} />
-              <span>{country.name}</span>
-            </Container>
-          </CountryListItem>
-        );
-      });
-    } else {
-      filteredCountries = countries
-        .filter((country) =>
-          country.name.toLowerCase().includes(searchText.toLowerCase())
-        )
-        .map((country, idx) => {
-          return (
-            <CountryListItem
-              data-focused={idx === highlightedItemIndex}
-              data-selected={selectedCountry?.name === country.name}
-              onClick={() => select(country)}
-              key={country.name}
-            >
-              <Container>
-                <img src={country.flag} />
-                <span>{country.name}</span>
-              </Container>
-            </CountryListItem>
-          );
-        });
-    }
-    return filteredCountries;
+    return countries.map((country, idx) => {
+      return (
+        <CountryListItem
+          data-focused={idx === highlightedItemIndex}
+          data-selected={selectedCountry?.name === country.name}
+          onClick={() => select(country)}
+          key={country.name}
+        >
+          <Container>
+            <img src={country.flag} />
+            <span>{country.name}</span>
+          </Container>
+        </CountryListItem>
+      );
+    });
   };
 
   return (
