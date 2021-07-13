@@ -8,7 +8,6 @@ export function loadOptions(searchTerm = "") {
       });
     });
   } else {
-    console.log("test");
     return axios
       .get(`https://restcountries.eu/rest/v2/name/${searchTerm}`)
       .then((res) => {

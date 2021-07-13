@@ -11,7 +11,7 @@ export function useFetch(loadOptions, searchTerm, isSelectedCountry) {
   );
 
   useEffect(() => {
-    if (!searchTerm) return;
+    if (!searchTerm || isSelectedCountry) return;
     else {
       setIsLoading(true);
       debouncedValue(searchTerm);

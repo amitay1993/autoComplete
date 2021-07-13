@@ -58,7 +58,6 @@ function AsyncDropDown({
         <label htmlFor="countriesChoice">Choose a Country:</label>
         {selectedCountry && <img src={selectedCountry.flag} />}
         <input {...inputProps} />
-
         {isOpen && <CountryList>{showCountries()}</CountryList>}
       </Search>
       {isLoading && <div className="loader">Loading...</div>}
