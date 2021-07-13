@@ -32,7 +32,7 @@ function AsyncDropDown({
     selectedCountry
   );
 
-  console.log(selectedCountry, isLoading);
+  //console.log(selectedCountry, isLoading);
 
   const showCountries = () => {
     return countries.map((country, idx) => {

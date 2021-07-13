@@ -7,7 +7,6 @@ import { loadOptions } from "./Utils/loadOptions";
 
 function App() {
   const [searchTerm, setSearchTerm] = useState("");
-  console.log(searchTerm);
 
   return (
     <div>
