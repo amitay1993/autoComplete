@@ -6,14 +6,14 @@ import styled from "styled-components";
 import { loadOptions } from "./Utils/loadOptions";
 
 function App() {
-  const [searchTerm, setSearchTerm] = useState("");
+  const [selectedItem, setSelectedItem] = useState(null);
 
   return (
     <div>
       <DropDown
         loadOptions={loadOptions}
-        onChange={setSearchTerm}
-        value={searchTerm}
+        onChange={setSelectedItem}
+        value={selectedItem}
         options={{ countries: data }}
       />
     </div>

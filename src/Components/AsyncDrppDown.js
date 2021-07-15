@@ -11,35 +11,29 @@ import styled from "styled-components";
 
 function AsyncDropDown({
   loadOptions,
-  value: searchTerm,
-  onChange: setSearchTerm,
+  value: selectedItem,
+  onChange: setSelectedItem,
 }) {
-  useDropDown(searchTerm, setSearchTerm);
+  useDropDown(selectedItem, setSelectedItem);
   const {
-    state: {
-      isOpen,
-      selectedCountry,
-      searchText,
-      highlightedItemIndex,
-      select,
-    },
+    state: { isOpen, searchText, highlightedItemIndex, select },
     inputProps,
     inputRef,
-  } = useDropDown(searchTerm, setSearchTerm);
+  } = useDropDown(selectedItem, setSelectedItem);
   const { countries, isLoading } = useFetch(
     loadOptions,
     searchText,
-    selectedCountry
+    selectedItem
   );
 
-  //console.log(selectedCountry, isLoading);
+  console.log(selectedItem);
 
   const showCountries = () => {
     return countries.map((country, idx) => {
       return (
         <CountryListItem
           data-focused={idx === highlightedItemIndex}
-          data-selected={selectedCountry?.name === country.name}
+          data-selected={selectedItem?.name === country.name}
           onClick={() => select(country)}
           key={country.name}
         >
@@ -56,7 +50,7 @@ function AsyncDropDown({
     <SearchWithLoadingSpinner>
       <Search ref={inputRef}>
         <label htmlFor="countriesChoice">Choose a Country:</label>
-        {selectedCountry && <img src={selectedCountry.flag} />}
+        {selectedItem && <img src={selectedItem.flag} />}
         <input {...inputProps} />
         {isOpen && <CountryList>{showCountries()}</CountryList>}
       </Search>

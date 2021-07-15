@@ -1,12 +1,11 @@
 import { useEffect, useRef, useState } from "react";
 import { useFetch } from "./useFetch";
 
-export function useDropDown(searchTerm, setSearchTerm, countries = []) {
+export function useDropDown(selectedItem, setSelectedItem, countries = []) {
   const initialState = {
-    selectedCountry: null,
     isOpen: false,
     highlightedItemIndex: -1,
-    searchText: searchTerm,
+    searchText: "",
     select: (country) => select(country),
   };
 
@@ -15,14 +14,11 @@ export function useDropDown(searchTerm, setSearchTerm, countries = []) {
 
   const search = (event) => {
     const input = event.target.value;
-    console.log(input);
-    //TODO ask regarding updating the external state.
-    setSearchTerm(input);
+    setSelectedItem(null);
     setState({
       ...state,
       searchText: input,
       isOpen: true,
-      selectedCountry: null,
     });
   };
 
@@ -31,10 +27,11 @@ export function useDropDown(searchTerm, setSearchTerm, countries = []) {
   };
 
   const select = (country) => {
+    setSelectedItem(country);
     setState({
       ...state,
       searchText: country.name,
-      selectedCountry: country,
+      isOpen: false,
     });
   };
 
