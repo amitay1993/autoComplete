@@ -11,10 +11,11 @@ function App() {
   return (
     <div>
       <DropDown
+        // onSearchInputChange={(searchText) => dispatch(getCoutries())}
+        // options={options}
         loadOptions={loadOptions}
         onChange={setSelectedItem}
         value={selectedItem}
-        options={{ countries: data }}
       />
     </div>
   );

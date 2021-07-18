@@ -14,26 +14,30 @@ function AsyncDropDown({
   value: selectedItem,
   onChange: setSelectedItem,
 }) {
-  useDropDown(selectedItem, setSelectedItem);
+  // const { countries, isLoading } = useFetch(
+  //   loadOptions,
+  //   searchText,
+  //   selectedItem
+  // );
+
   const {
-    state: { isOpen, searchText, highlightedItemIndex, select },
+    state: { isOpen, highlightedItemIndex },
     inputProps,
     inputRef,
-  } = useDropDown(selectedItem, setSelectedItem);
-  const { countries, isLoading } = useFetch(
-    loadOptions,
-    searchText,
-    selectedItem
-  );
+    select,
+    countries,
+    isLoading,
+  } = useDropDown(loadOptions, selectedItem, setSelectedItem);
 
-  console.log(selectedItem);
+  console.log(highlightedItemIndex);
 
   const showCountries = () => {
-    return countries.map((country, idx) => {
+    //TODO:ASK regarding the loading since we clicked the input and there is no countries yet.
+    return countries?.map((country, idx) => {
       return (
         <CountryListItem
-          data-focused={idx === highlightedItemIndex}
-          data-selected={selectedItem?.name === country.name}
+          isFocused={idx === highlightedItemIndex}
+          isSelected={selectedItem?.name === country.name}
           onClick={() => select(country)}
           key={country.name}
         >

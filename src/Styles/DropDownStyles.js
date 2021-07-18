@@ -34,15 +34,10 @@ export const CountryListItem = styled.li`
   padding: 0.5rem;
 
   &:hover {
-    background-color: lightblue;
+    background-color: rgba(139, 234, 255, 0.89);
     cursor: pointer;
   }
 
-  &[data-selected="true"] {
-    background-color: #7ab3b3;
-  }
-
-  &[data-focused="true"] {
-    background-color: #deffff;
-  }
+  background-color: ${(props) => props.isFocused && "rgba(0, 95, 115, 0.5)"};
+  background-color: ${(props) => props.isSelected && "rgba(0, 95, 115, 0.5)"};
 `;

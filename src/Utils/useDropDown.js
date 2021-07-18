@@ -1,73 +1,82 @@
 import { useEffect, useRef, useState } from "react";
 import { useFetch } from "./useFetch";
+import { calcCorrectIndex } from "./calcCorrectIndex";
 
-export function useDropDown(selectedItem, setSelectedItem, countries = []) {
+export function useDropDown(loadOptions, selectedItem, setSelectedItem) {
   const initialState = {
     isOpen: false,
-    highlightedItemIndex: -1,
+    highlightedItemIndex: 0,
     searchText: "",
-    select: (country) => select(country),
   };
 
   const [state, setState] = useState(initialState);
+  const { countries, isLoading } = useFetch(
+    loadOptions,
+    state.searchText,
+    selectedItem
+  );
   const inputRef = useRef(null);
 
-  const search = (event) => {
+  const onChange = (event) => {
     const input = event.target.value;
     setSelectedItem(null);
-    setState({
-      ...state,
-      searchText: input,
-      isOpen: true,
+    // queue = [setState, setState, setState]
+    // setState((state) => ({ ...state, }))
+    setState((prevState) => {
+      return {
+        ...prevState,
+        searchText: input,
+        isOpen: true,
+      };
     });
   };
 
   const click = () => {
-    setState({ ...state, isOpen: true });
+    setState((prevState) => {
+      return { ...prevState, isOpen: true };
+    });
   };
 
   const select = (country) => {
     setSelectedItem(country);
-    setState({
-      ...state,
-      searchText: country.name,
-      isOpen: false,
+    setState((prevState) => {
+      return {
+        ...state,
+        searchText: country.name,
+        isOpen: false,
+        highlightedItemIndex: -1,
+      };
     });
   };
 
-  const chooseDirection = (event) => {
-    const direction = event.code;
-    const { highlightedItemIndex } = state;
-    console.log(direction);
-    if (direction === "ArrowUp") {
-      setState((prevState) => {
-        return {
-          ...prevState,
-          highlightedItemIndex:
-            highlightedItemIndex - 1 >= 0
-              ? highlightedItemIndex - 1
-              : highlightedItemIndex,
-        };
-      });
-    } else if (direction === "ArrowDown") {
-      setState((prevState) => {
-        return {
-          ...prevState,
-          highlightedItemIndex:
-            highlightedItemIndex + 1 < countries.length
-              ? highlightedItemIndex + 1
-              : highlightedItemIndex,
-        };
-      });
-    } else if (direction === "Enter") {
-      const { highlightedItemIndex } = state;
-      setState({
-        ...state,
-        selectedCountry: countries[highlightedItemIndex],
-        searchText: countries[highlightedItemIndex].name,
-        isOpen: false,
-      });
+  const onKeyDown = (event) => {
+    const keyCode = event.code;
+    let { highlightedItemIndex } = state;
+
+    switch (keyCode) {
+      case "ArrowUp":
+        highlightedItemIndex--;
+        break;
+      case "ArrowDown":
+        highlightedItemIndex++;
+        console.log({ highlightedItemIndex });
+
+        break;
+      case "Enter":
+        select(countries[highlightedItemIndex]);
+        break;
+      default:
+        return;
     }
+
+    const calculatedIndex = calcCorrectIndex(highlightedItemIndex, countries);
+
+    setState((prevState) => {
+      return {
+        ...prevState,
+        highlightedItemIndex: calculatedIndex,
+      };
+    });
   };
 
   useEffect(() => {
@@ -87,17 +96,31 @@ export function useDropDown(selectedItem, setSelectedItem, countries = []) {
     };
   }, [inputRef]);
 
+  useEffect(() => {
+    if (!isLoading) {
+      setState((prevState) => {
+        return {
+          ...prevState,
+          isOpen: true,
+        };
+      });
+    }
+  }, [isLoading]);
+
   const inputProps = {
     value: state.searchText,
-    onChange: search,
+    onChange: onChange,
     onClick: click,
-    onKeyDown: chooseDirection,
+    onKeyDown: onKeyDown,
   };
 
   return {
     state,
     inputProps,
     inputRef,
-    keydownHandler: chooseDirection,
+    keydownHandler: onKeyDown,
+    select,
+    countries,
+    isLoading,
   };
 }
