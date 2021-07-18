@@ -13,6 +13,7 @@ function AsyncDropDown({
   loadOptions,
   value: selectedItem,
   onChange: setSelectedItem,
+  renderInput,
 }) {
   // const { countries, isLoading } = useFetch(
   //   loadOptions,
@@ -55,7 +56,7 @@ function AsyncDropDown({
       <Search ref={inputRef}>
         <label htmlFor="countriesChoice">Choose a Country:</label>
         {selectedItem && <img src={selectedItem.flag} />}
-        <input {...inputProps} />
+        {renderInput(inputProps)}
         {isOpen && <CountryList>{showCountries()}</CountryList>}
       </Search>
       {isLoading && <div className="loader">Loading...</div>}

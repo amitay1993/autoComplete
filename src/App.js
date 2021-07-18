@@ -1,8 +1,7 @@
 import "./App.css";
 import DropDown from "./Components/DropDown";
-import data from "./Utils/countryData";
 import { useState } from "react";
-import styled from "styled-components";
+
 import { loadOptions } from "./Utils/loadOptions";
 
 function App() {
@@ -16,6 +15,7 @@ function App() {
         loadOptions={loadOptions}
         onChange={setSelectedItem}
         value={selectedItem}
+        renderInput={(inputProps) => <input {...inputProps} />}
       />
     </div>
   );
