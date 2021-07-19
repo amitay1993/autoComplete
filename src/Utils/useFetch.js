@@ -6,7 +6,6 @@ export function useFetch(loadOptions, searchTerm = "", isSelectedCountry) {
   const [isLoading, setIsLoading] = useState(true);
 
   async function fetchData(newValue) {
-    console.log(newValue);
     try {
       const results = await loadOptions(newValue);
       setCountries(results);

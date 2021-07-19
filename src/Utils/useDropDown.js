@@ -32,6 +32,7 @@ export function useDropDown(loadOptions, selectedItem, setSelectedItem) {
   };
 
   const click = () => {
+    if (state.isOpen) return;
     setState((prevState) => {
       return { ...prevState, isOpen: true };
     });
