@@ -8,9 +8,11 @@ import {
 } from "../Styles/DropDownStyles";
 import { useDropDown } from "../Utils/useDropDown";
 
-function SyncDropDown({ value: searchTerm, options, onChange: setSearchTerm }) {
-  const { countries } = options;
-  //console.log(countries);
+function SyncDropDown({
+  value: searchTerm,
+  options: countries,
+  onChange: setSearchTerm,
+}) {
   const {
     state: {
       isOpen,
@@ -26,11 +28,11 @@ function SyncDropDown({ value: searchTerm, options, onChange: setSearchTerm }) {
   const showCountries = () => {
     let filteredCountries;
     if (selectedCountry) {
-      filteredCountries = options.countries.map((country, idx) => {
+      filteredCountries = countries.map((country, idx) => {
         return (
           <CountryListItem
-            data-focused={idx === highlightedItemIndex}
-            data-selected={selectedCountry?.name === country.name}
+            isFocused={idx === highlightedItemIndex}
+            isSelected={selectedCountry?.name === country.name}
             onClick={() => select(country)}
             key={country.name}
           >

@@ -3,6 +3,7 @@ import DropDown from "./Components/DropDown";
 import { useState } from "react";
 
 import { loadOptions } from "./Utils/loadOptions";
+import data from "./Utils/countryData";
 
 function App() {
   const [selectedItem, setSelectedItem] = useState(null);
@@ -10,9 +11,7 @@ function App() {
   return (
     <div>
       <DropDown
-        // onSearchInputChange={(searchText) => dispatch(getCoutries())}
-        // options={options}
-        loadOptions={loadOptions}
+        options={data}
         onChange={setSelectedItem}
         value={selectedItem}
         renderInput={(inputProps) => <input {...inputProps} />}
