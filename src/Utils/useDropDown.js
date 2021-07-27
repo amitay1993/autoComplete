@@ -2,7 +2,12 @@ import { useEffect, useRef, useState } from "react";
 import { useFetch } from "./useFetch";
 import { calcCorrectIndex } from "./calcCorrectIndex";
 
-export function useDropDown(loadOptions, selectedItem, setSelectedItem) {
+export function useDropDown({
+  loadOptions,
+  options,
+  selectedItem,
+  setSelectedItem,
+}) {
   const initialState = {
     isOpen: false,
     highlightedItemIndex: 0,
@@ -53,6 +58,7 @@ export function useDropDown(loadOptions, selectedItem, setSelectedItem) {
   const onKeyDown = (event) => {
     const keyCode = event.code;
     let { highlightedItemIndex } = state;
+    console.log("keydown");
 
     switch (keyCode) {
       case "ArrowUp":
@@ -64,13 +70,13 @@ export function useDropDown(loadOptions, selectedItem, setSelectedItem) {
 
         break;
       case "Enter":
-        select(countries[highlightedItemIndex]);
+        select(options[highlightedItemIndex]);
         break;
       default:
         return;
     }
 
-    const calculatedIndex = calcCorrectIndex(highlightedItemIndex, countries);
+    const calculatedIndex = calcCorrectIndex(highlightedItemIndex, options);
 
     setState((prevState) => {
       return {

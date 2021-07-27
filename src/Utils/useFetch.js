@@ -7,9 +7,11 @@ export function useFetch(loadOptions, searchTerm = "", isSelectedCountry) {
 
   async function fetchData(newValue) {
     try {
-      const results = await loadOptions(newValue);
-      setCountries(results);
-      setIsLoading(false);
+      if (loadOptions) {
+        const results = await loadOptions(newValue);
+        setCountries(results);
+        setIsLoading(false);
+      }
     } catch (error) {
       const { status: errorCode } = error.response;
       if (errorCode === 404) {

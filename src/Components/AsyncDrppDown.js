@@ -6,7 +6,7 @@ import {
   Search,
 } from "../Styles/DropDownStyles";
 import { useDropDown } from "../Utils/useDropDown";
-import { useFetch } from "../Utils/useFetch";
+
 import styled from "styled-components";
 
 function AsyncDropDown({
@@ -15,12 +15,6 @@ function AsyncDropDown({
   onChange: setSelectedItem,
   renderInput,
 }) {
-  // const { countries, isLoading } = useFetch(
-  //   loadOptions,
-  //   searchText,
-  //   selectedItem
-  // );
-
   const {
     state: { isOpen, highlightedItemIndex },
     inputProps,

@@ -9,30 +9,26 @@ import {
 import { useDropDown } from "../Utils/useDropDown";
 
 function SyncDropDown({
-  value: searchTerm,
-  options: countries,
-  onChange: setSearchTerm,
+  value: selectedItem,
+  options,
+  onChange: setSelectedItem,
 }) {
   const {
-    state: {
-      isOpen,
-      selectedCountry,
-      searchText,
-      highlightedItemIndex,
-      select,
-    },
+    state: { isOpen, searchText, highlightedItemIndex },
+    select,
     inputProps,
     inputRef,
-  } = useDropDown(searchTerm, setSearchTerm, countries);
+  } = useDropDown({ selectedItem, options, setSelectedItem });
 
+  const countries = options;
   const showCountries = () => {
     let filteredCountries;
-    if (selectedCountry) {
+    if (selectedItem) {
       filteredCountries = countries.map((country, idx) => {
         return (
           <CountryListItem
             isFocused={idx === highlightedItemIndex}
-            isSelected={selectedCountry?.name === country.name}
+            isSelected={selectedItem?.name === country.name}
             onClick={() => select(country)}
             key={country.name}
           >
@@ -51,8 +47,8 @@ function SyncDropDown({
         .map((country, idx) => {
           return (
             <CountryListItem
-              data-focused={idx === highlightedItemIndex}
-              data-selected={selectedCountry?.name === country.name}
+              isFocused={idx === highlightedItemIndex}
+              isSelected={selectedItem?.name === country.name}
               onClick={() => select(country)}
               key={country.name}
             >
@@ -70,7 +66,7 @@ function SyncDropDown({
   return (
     <Search ref={inputRef}>
       <label htmlFor="countriesChoice">Choose a Country:</label>
-      {selectedCountry && <img src={selectedCountry.flag} />}
+      {selectedItem && <img src={selectedItem.flag} />}
       <input {...inputProps} />
       {isOpen && <CountryList>{showCountries()}</CountryList>}
     </Search>
